@@ -3,18 +3,11 @@ import { products } from './products.js';
 // get parent element
 const sectionCenter = document.querySelector('.section-center');
 const btnContainer = document.querySelector('.btn-container');
-// display all items when page loads
-console.log('here');
-window.addEventListener('DOMContentLoaded', function () {
-  displayProducts(products);
-  displayCategoryButtons();
-});
 
-function displayProducts(productList) {
-  let displayProduct = productList.map((item) => {
-    // console.log(item);
-
-    return `<article class="product-item">
+const displayProducts = (productList) => {
+  let displayProduct = productList.map(
+    (item) =>
+      `<article class="product-item">
           <img src=${item.thumbnail} alt=${item.title} class="photo" />
           <div class="item-info">
             <header>
@@ -25,12 +18,12 @@ function displayProducts(productList) {
               ${item.description}
             </p>
           </div>
-        </article>`;
-  });
+        </article>`
+  );
   displayProduct = displayProduct.join('');
   sectionCenter.innerHTML = displayProduct;
-}
-function displayCategoryButtons() {
+};
+const displayCategoryButtons = () => {
   const categories = products.reduce(
     (acc, item) => {
       if (!acc.includes(item.category)) {
@@ -51,8 +44,8 @@ function displayCategoryButtons() {
     .join('');
 
   btnContainer.innerHTML = categoryBtns;
-  const filterBtns = btnContainer.querySelectorAll('.filter-btn');
 
+  const filterBtns = btnContainer.querySelectorAll('.filter-btn');
   filterBtns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
       const category = e.currentTarget.dataset.id;
@@ -66,4 +59,10 @@ function displayCategoryButtons() {
       }
     });
   });
-}
+};
+
+// display all items when page loads
+window.addEventListener('DOMContentLoaded', function () {
+  displayProducts(products);
+  displayCategoryButtons();
+});
