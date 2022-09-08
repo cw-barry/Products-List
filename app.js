@@ -23,6 +23,7 @@ const displayProducts = (productList) => {
   displayProduct = displayProduct.join('');
   sectionCenter.innerHTML = displayProduct;
 };
+
 const displayCategoryButtons = () => {
   const categories = products.reduce(
     (acc, item) => {
@@ -33,6 +34,7 @@ const displayCategoryButtons = () => {
     },
     ['all']
   );
+
   const categoryBtns = categories
     .map(
       (
