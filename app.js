@@ -1,6 +1,5 @@
 import { products } from './products.js';
 
-// get parent element
 const sectionCenter = document.querySelector('.section-center');
 const btnContainer = document.querySelector('.btn-container');
 
@@ -47,10 +46,9 @@ const displayCategoryButtons = () => {
 
   btnContainer.innerHTML = categoryBtns;
 
-  const filterBtns = btnContainer.querySelectorAll('.filter-btn');
-  filterBtns.forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      const category = e.currentTarget.dataset.id;
+  btnContainer.addEventListener('click', (e) => {
+    if (e.target.className == 'filter-btn') {
+      const category = e.target.dataset.id;
       const productCategory = products.filter(
         (item) => item.category === category
       );
@@ -59,11 +57,25 @@ const displayCategoryButtons = () => {
       } else {
         displayProducts(productCategory);
       }
-    });
+    }
   });
+
+  // const filterBtns = btnContainer.querySelectorAll('.filter-btn');
+  // filterBtns.forEach((btn) => {
+  //   btn.addEventListener('click', (e) => {
+  //     const category = e.currentTarget.dataset.id;
+  //     const productCategory = products.filter(
+  //       (item) => item.category === category
+  //     );
+  //     if (category === 'all') {
+  //       displayProducts(products);
+  //     } else {
+  //       displayProducts(productCategory);
+  //     }
+  //   });
+  // });
 };
 
-// display all items when page loads
 window.addEventListener('DOMContentLoaded', function () {
   displayProducts(products);
   displayCategoryButtons();
