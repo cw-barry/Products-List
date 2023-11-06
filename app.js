@@ -1,4 +1,6 @@
-import { products } from './products.js';
+// import { products } from './products.js';
+
+let products = [];
 
 const sectionCenter = document.querySelector('.section-center');
 const btnContainer = document.querySelector('.btn-container');
@@ -45,38 +47,32 @@ const displayCategoryButtons = () => {
     .join('');
 
   btnContainer.innerHTML = categoryBtns;
-
-  btnContainer.addEventListener('click', (e) => {
-    if (e.target.className == 'filter-btn') {
-      const category = e.target.dataset.id;
-      const productCategory = products.filter(
-        (item) => item.category === category
-      );
-      if (category === 'all') {
-        displayProducts(products);
-      } else {
-        displayProducts(productCategory);
-      }
-    }
-  });
-
-  // const filterBtns = btnContainer.querySelectorAll('.filter-btn');
-  // filterBtns.forEach((btn) => {
-  //   btn.addEventListener('click', (e) => {
-  //     const category = e.currentTarget.dataset.id;
-  //     const productCategory = products.filter(
-  //       (item) => item.category === category
-  //     );
-  //     if (category === 'all') {
-  //       displayProducts(products);
-  //     } else {
-  //       displayProducts(productCategory);
-  //     }
-  //   });
-  // });
 };
 
-window.addEventListener('DOMContentLoaded', function () {
-  displayProducts(products);
-  displayCategoryButtons();
+btnContainer.addEventListener('click', (e) => {
+  if (e.target.className == 'filter-btn') {
+    const category = e.target.dataset.id;
+    const productCategory = products.filter(
+      (item) => item.category === category
+    );
+    if (category === 'all') {
+      displayProducts(products);
+    } else {
+      displayProducts(productCategory);
+    }
+  }
 });
+
+async function getData() {
+  try {
+    const res = await fetch('https://dummyjson.com/products');
+    const data = await res.json();
+    products = data?.products;
+    displayProducts(products);
+    displayCategoryButtons();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+getData();
